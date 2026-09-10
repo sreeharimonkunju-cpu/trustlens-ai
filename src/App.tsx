@@ -3,7 +3,7 @@ import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-
 import { AppProvider, useApp } from "./context";
 import { Sidebar } from "./components/Sidebar";
 import { TopBar } from "./components/TopBar";
-import { AlertTriangle, ArrowRight, BarChart3, CheckCircle2, FileCheck2, FileSearch, Fingerprint, LockKeyhole, ScanFace, ShieldCheck, Sparkles, UploadCloud } from "lucide-react";
+import { AlertTriangle, ArrowRight, BarChart3, CheckCircle2, FileCheck2, FileSearch, Fingerprint, History as HistoryIcon, LockKeyhole, ScanFace, ShieldCheck, Sparkles, UploadCloud } from "lucide-react";
 import { motion } from "framer-motion";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, PieChart, Pie, Cell, LineChart, Line } from "recharts";
 import { analyzeDocument } from "./services/mockAI";
@@ -148,7 +148,7 @@ function Reports() {
 
 function History() {
   const {history}=useApp(); const [q,setQ]=useState(""); const filtered=history.filter(x=>`${x.id} ${x.identity.name} ${x.documentType}`.toLowerCase().includes(q.toLowerCase()));
-  return <Page title="Verification History" eyebrow="SESSION RECORDS" subtitle="Only mock result metadata is persisted in localStorage for this prototype."><div className="card table-card"><div className="filter-row"><input placeholder="Search applicant, report ID or document type…" value={q} onChange={e=>setQ(e.target.value)}/><div className="filter-pills"><span>All</span><span>Low Risk</span><span>Review</span><span>High Risk</span></div></div><VerificationTable rows={filtered}/>{!history.length&&<div className="empty-state"><History size={30}/><h3>No session verifications yet</h3><p>Run one of the deterministic demo cases to populate history.</p></div>}</div></Page>;
+  return <Page title="Verification History" eyebrow="SESSION RECORDS" subtitle="Only mock result metadata is persisted in localStorage for this prototype."><div className="card table-card"><div className="filter-row"><input placeholder="Search applicant, report ID or document type…" value={q} onChange={e=>setQ(e.target.value)}/><div className="filter-pills"><span>All</span><span>Low Risk</span><span>Review</span><span>High Risk</span></div></div><VerificationTable rows={filtered}/>{!history.length&&<div className="empty-state"><HistoryIcon size={30}/><h3>No session verifications yet</h3><p>Run one of the deterministic demo cases to populate history.</p></div>}</div></Page>;
 }
 
 function Settings() {
@@ -163,3 +163,5 @@ function Page({title,eyebrow,subtitle,children}:{title:string;eyebrow:string;sub
 function Empty({title,text,action}:{title:string;text:string;action?:()=>void}) { return <Page title={title} eyebrow="TRUSTLENS AI"><div className="card empty-state"><FileSearch size={34}/><p>{text}</p>{action&&<button className="primary-btn" onClick={action}>Start Verification</button>}</div></Page> }
 
 export default function App(){return <AppProvider><AppShell/></AppProvider>}
+
+
